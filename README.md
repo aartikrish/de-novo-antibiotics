@@ -40,7 +40,8 @@ pip install git+https://github.com/reymond-group/RAscore.git@master
 
 ## 2. Chemprop Models 
 
-This work uses Chemprop ensemble models trained to predict antibiotic activity against _Staphylococcus aureus_ and _Neisseria gonorrhoeae_. Additionally, we provide three Chemprop models for cytotoxicity prediction against HepG2, IMR90, and HSkMC human cell lines. The checkpoints and training can be found at [ADD LINK]. 
+This work uses Chemprop ensemble models trained to predict antibiotic activity against _Staphylococcus aureus_ and _Neisseria gonorrhoeae_. Additionally, we provide three Chemprop models for cytotoxicity prediction against HepG2, IMR90, and HSkMC human cell lines. The checkpoints and training can be found at [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.15191826.svg)](https://doi.org/10.5281/zenodo.15191826)
+. 
 
 ### Train a Chemprop Model
 
