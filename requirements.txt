@@ -11,6 +11,7 @@ crem
 
 # t-SNE library
 openTSNE>=0.6.0
+cairosvg
 
 # Other useful packages
 astunparse>=1.6.3
