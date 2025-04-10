@@ -7,10 +7,11 @@ This repository accompanies the manuscript **"A generative deep learning approac
 ## 📁 Table of Contents
 
 - [1. Setting up the Environment](#1-setting-up-the-environment)
-- [2. `models/` – Chemprop Scoring](#2-models--chemprop-scoring)
-- [3. `downselection/` – Filtering Hits for Fragment-Based Generation](#3-downselection--filtering-hits-for-fragment-based-generation)
-- [4. `fragment_de_novo/` – Fragment-Based Generation (F1, F2, F2′)](#4-fragment_de_novo--fragment-based-generation-f1-f2-f2)
-- [5. `entirely_de_novo/` – Full Molecule Generation](#5-entirely_de_novo--full-molecule-generation)
+- [2. Chemprop Models](#2-chemprop-models)
+- [3. Filtering Molecules – `downselection/`](#3-filtering-molecules)
+- [4. Fragment-Based Molecule Generation – `crem_molecule_generation/`](#4-fragment-based-molecule-generation)
+- [5. Full Molecule Generation](#5-full-molecule-generation)
+- [6. tSNE Plot – `tSNE_plot/`](#6-tsne-plot)
   
 ---
 
@@ -24,14 +25,13 @@ conda activate antibiotics
 conda install -c conda-forge rdkit
 pip install git+https://github.com/bp-kelley/descriptastorus
 pip install chemprop
-pip install pandas numpy tqdm os subprocess tqdm sys time crem 
 ```
 
 ---
 
-## 2. `models/` – Chemprop Scoring
+## 2. Chemprop Models 
 
-This work uses Chemprop ensemble models trained to predict antibiotic activity against _Staphylococcus aureus_ and _Neisseria gonorrhoeae_. Additionally, we provide three Chemprop models for cytotoxicity prediction against HepG2, IMR90, and HSkMC human cell lines.
+This work uses Chemprop ensemble models trained to predict antibiotic activity against _Staphylococcus aureus_ and _Neisseria gonorrhoeae_. Additionally, we provide three Chemprop models for cytotoxicity prediction against HepG2, IMR90, and HSkMC human cell lines. The checkpoints and training can be found at [ADD LINK]. 
 
 ### Train a Chemprop Model
 
@@ -59,25 +59,27 @@ chemprop_predict \
 
 ---
 
-## 3. `downselection/` – Filtering Hits for Fragment-Based Generation
+## 3. Filtering Molecules – `downselection/`
 
-We provide Jupyter notebooks to downselect predicted hits for _S. aureus_ and _N. gonorrhoeae_ separately.
+We provide a general Jupyter notebooks to downselect molecules based on the filters used in the manuscript.  
 
 ### Downselection Criteria
 
-1. Filter based on Chemprop-predicted antibiotic activity.
-2. Remove fragments with high predicted cytotoxicity.
-3. Apply PAINS and Brenk structural filters.
-4. Remove compounds similar to known antibiotics.
-5. (Optional) Manual inspection.
+* Antibiotic activity based on Chemprop scores (Staph. aureus, N. gonorrhoeae): ```ACTIVITY_THRESHOLD```
+* Cytotoxicity based on Chemprop scores (IMR90, HSkMC, HepG2): ```TOXICITY_THRESHOLD```
+* PAINS and Brenk filters (binary, no threshold needed)
+* Tanimoto similarity to 559 known antibiotics: ```TANSIM_THRESHOLD```
+* Retrosynthetic accessbility (RA) score: ```RA_THRESHOLD```
 
-Final filtered CSVs are included in this folder.
+The filtered CSVs and the original SMILES lists can be found at [ADD LINK]. 
 
 ---
 
-## 4. `fragment_de_novo/` – Fragment-Based Generation (F1, F2, F2′)
+## 4. Fragment-Based Molecule Generation (F1, F2, F2′) – `crem_molecule_generation/` 
 
-This folder includes generative runs seeded on three fragments: **F1, F2, and F2′**. Each was expanded using both CReM and F-VAE. The code used for molecule generation with F-VAE can be found at the original [GitHub](https://github.com/wengong-jin/multiobj-rationale). The code for generating molecules with F-CReM can be found in `crem_molecule_generation/`. 
+This folder includes generative runs seeded on three fragments: **F1, F2, and F2′**. Each was expanded using both CReM and F-VAE. The code used for molecule generation with F-VAE can be found at the original [GitHub](https://github.com/wengong-jin/multiobj-rationale). The code for generating molecules with CReM can be found in `crem_molecule_generation/` and is adapted by simply changing the SMILES of input fragment. 
+
+The list of generated molecules can be found at [ADD LINK]. 
 
 ### Results Summary
 
@@ -92,14 +94,14 @@ This folder includes generative runs seeded on three fragments: **F1, F2, and F2
 
 ---
 
-## 5. `entirely_de_novo/` – Full Molecule Generation
+## 5. Full Molecule Generation
 
 We also explored _de novo_ generation from scratch using:
 
 - **JT-VAE**: A variational autoencoder that generates molecules from latent space. 
 - **CReM**: Random fragment recombination starting from seed three molecules (H₂O, NH₃, CH₄).
 
-The code used for de novo molecule generation with JT-VAE can be found at the original [GitHub](https://github.com/wengong-jin/hgraph2graph). The code for generating molecules de novo with ReM can can be found in `crem_molecule_generation/`. 
+The code used for de novo molecule generation with JT-VAE can be found at the original [GitHub](https://github.com/wengong-jin/hgraph2graph). The same code for generating molecules from fragments with CReM was used to generate de novo CReM molecules. Simply adapt the code found in `crem_molecule_generation/` by using H₂O, NH₃, CH₄ as input fragments. 
 
 ### Results Summary
 
@@ -109,3 +111,7 @@ The code used for de novo molecule generation with JT-VAE can be found at the or
 | CReM    | 55,031           |
 
 All generated molecules were scored on-the-fly using Chemprop and then filtered as described in the paper. 
+
+## 6. tSNE Plot – `tSNE_plot/` 
+
+The code to generate the tSNE plot is given. The files with the SMILES list used as input can be found at [ADD LINK].
