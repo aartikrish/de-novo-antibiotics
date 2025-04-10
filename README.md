@@ -22,12 +22,20 @@ We recommend using Conda to manage environments. Clone this repository and insta
 ```bash
 conda create -n antibiotics python=3.8
 conda activate antibiotics
-conda install -c conda-forge rdkit
+conda install -c conda-forge rdkit crem cairosvg openTSNE
 pip install git+https://github.com/bp-kelley/descriptastorus
 pip install chemprop==1.7.1
 pip install -r requirements.txt
 ```
 
+Note that this environment is incompatible with the exact package versions needed to predict RA_scores, see also the original [GitHub](https://github.com/reymond-group/RAscore). It is best to create a separate conda environment for this 
+
+```bash
+conda create -n ra_score python=3.7
+conda activate ra_score
+conda install -c rdkit rdkit -y
+pip install git+https://github.com/reymond-group/RAscore.git@master
+```
 ---
 
 ## 2. Chemprop Models 
