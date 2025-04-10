@@ -1,6 +1,8 @@
 # A Generative Deep Learning Approach to _de novo_ Antibiotic Design
 
-This repository accompanies the manuscript **"A generative deep learning approach to _de novo_ antibiotic design"** by Krishnan, Anahtar, Valerie, et al.
+This repository accompanies the manuscript **"A generative deep learning approach to _de novo_ antibiotic design"** by Krishnan, Anahtar, Valerie, et al. The datasets accompanying it can be found at Zenodo: 
+
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.15191826.svg)](https://doi.org/10.5281/zenodo.15191826)
 
 ---
 
@@ -40,8 +42,7 @@ pip install git+https://github.com/reymond-group/RAscore.git@master
 
 ## 2. Chemprop Models 
 
-This work uses Chemprop ensemble models trained to predict antibiotic activity against _Staphylococcus aureus_ and _Neisseria gonorrhoeae_. Additionally, we provide three Chemprop models for cytotoxicity prediction against HepG2, IMR90, and HSkMC human cell lines. The checkpoints and training can be found at [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.15191826.svg)](https://doi.org/10.5281/zenodo.15191826)
-. 
+This work uses Chemprop ensemble models trained to predict antibiotic activity against _Staphylococcus aureus_ and _Neisseria gonorrhoeae_. Additionally, we provide three Chemprop models for cytotoxicity prediction against HepG2, IMR90, and HSkMC human cell lines. The checkpoints and training can be found at [Zenodo](https://doi.org/10.5281/zenodo.15191826).
 
 ### Train a Chemprop Model
 
@@ -81,7 +82,7 @@ We provide a general Jupyter notebooks to downselect molecules based on the filt
 * Tanimoto similarity to 559 known antibiotics: ```TANSIM_THRESHOLD```
 * Retrosynthetic accessbility (RA) score: ```RA_THRESHOLD```
 
-The filtered CSVs and the original SMILES lists can be found at [ADD LINK]. 
+The filtered CSVs and the original SMILES lists can be found at [Zenodo](https://doi.org/10.5281/zenodo.15191826).
 
 ---
 
@@ -124,4 +125,4 @@ All generated molecules were scored on-the-fly using Chemprop and then filtered 
 
 ## 6. tSNE Plot – `tSNE_plot/` 
 
-The code to generate the tSNE plot is given. The files with the SMILES list used as input can be found at [ADD LINK].
+The code to generate the tSNE plot is given. The files with the SMILES list used as input can be found at [Zenodo](https://doi.org/10.5281/zenodo.15191826).
