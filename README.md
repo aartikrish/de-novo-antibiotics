@@ -22,7 +22,7 @@ We recommend using Conda to manage environments. Clone this repository and insta
 ```bash
 conda create -n antibiotics python=3.8
 conda activate antibiotics
-conda install -c conda-forge rdkit crem cairosvg openTSNE
+conda install -c conda-forge rdkit 
 pip install git+https://github.com/bp-kelley/descriptastorus
 pip install chemprop==1.7.1
 pip install -r requirements.txt
