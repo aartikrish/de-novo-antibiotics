@@ -24,7 +24,8 @@ conda create -n antibiotics python=3.8
 conda activate antibiotics
 conda install -c conda-forge rdkit
 pip install git+https://github.com/bp-kelley/descriptastorus
-pip install chemprop
+pip install chemprop==1.7.1
+pip install -r requirements.txt
 ```
 
 ---
