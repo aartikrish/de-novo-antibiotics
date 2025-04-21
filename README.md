@@ -127,4 +127,4 @@ All generated molecules were scored on-the-fly using Chemprop and then filtered 
 
 ## 6. tSNE Plot – `tSNE_plot/` 
 
-The code to generate the tSNE plot is given. The files with the SMILES list used as input can be found at [Zenodo](https://doi.org/10.5281/zenodo.15191826).
+The code to generate the tSNE plot is given. The files with the SMILES list used as input can be found on [Zenodo](https://doi.org/10.5281/zenodo.15191826).
