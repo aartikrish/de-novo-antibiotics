@@ -2,7 +2,7 @@
 
 This repository accompanies the manuscript **"A generative deep learning approach to _de novo_ antibiotic design"** by Krishnan, Anahtar, Valerie, et al., 2025. The datasets accompanying it can be found at Zenodo: 
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.15191826.svg)](https://doi.org/10.5281/zenodo.15191826)
+[![DOI]([https://zenodo.org/badge/DOI/10.5281/zenodo.15191826.svg)](https://doi.org/10.5281/zenodo.15191826](https://zenodo.org/records/15191826))
 
 # Summary
 The antimicrobial resistance crisis necessitates structurally novel antibiotics. While deep learning approaches can identify antibacterial compounds from existing libraries, structural novelty remains limited. Here, we developed a generative artificial intelligence framework for designing _de novo_ antibiotics through two approaches: (1) a fragment-based method to comprehensively screen >10^7 chemical fragments in silico against _Neisseria gonorrhoeae_ or _Staphylococcus aureus_, subsequently expanding promising fragments, and (2) unconstrained de novo compound generation, each using genetic algorithms and variational encoders. Of 24 synthesized compounds, seven demonstrated selective antibacterial activity. Two lead compounds exhibited bactericidal efficacy against multidrug-resistant isolates, distinct mechanisms of action, and reduced bacterial burden in vivo in mouse models of _N. gonorrhoeae_ vaginal infection and methicillin-resistant _S. aureus_ skin infection. We further validated structural analogs for both compound classes as antibacterial. Our approach enables the generative deep learning-guided design of de novo antibiotics, providing a platform for mapping uncharted regions of chemical space.
