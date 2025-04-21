@@ -93,7 +93,7 @@ The filtered CSVs and the original SMILES lists can be found at [Zenodo](https:/
 
 This folder includes generative runs seeded on three fragments: **F2, F3, and F3′**. Each was expanded using both CReM and F-VAE. The code used for molecule generation with F-VAE can be found at the original [GitHub](https://github.com/wengong-jin/multiobj-rationale). The code for generating molecules with CReM can be found in `crem_molecule_generation/` and is adapted by simply changing the SMILES of input fragment. 
 
-The list of generated molecules can be found at [ADD LINK]. 
+The list of generated molecules can be found at [Zenodo](https://doi.org/10.5281/zenodo.15191826).
 
 ### Results Summary
 
