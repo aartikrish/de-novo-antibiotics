@@ -4,6 +4,9 @@ This repository accompanies the manuscript **"A generative deep learning approac
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.15191826.svg)](https://doi.org/10.5281/zenodo.15191826)
 
+# Summary
+The antimicrobial resistance crisis necessitates structurally novel antibiotics. While deep learning approaches can identify antibacterial compounds from existing libraries, structural novelty remains limited. Here, we developed a generative artificial intelligence framework for designing de novo antibiotics through two approaches: (1) a fragment-based method to comprehensively screen >107 chemical fragments in silico against Neisseria gonorrhoeae or Staphylococcus aureus, subsequently expanding promising fragments, and (2) unconstrained de novo compound generation, each using genetic algorithms and variational encoders. Of 24 synthesized compounds, seven demonstrated selective antibacterial activity. Two lead compounds exhibited bactericidal efficacy against multidrug-resistant isolates, distinct mechanisms of action, and reduced bacterial burden in vivo in mouse models of N. gonorrhoeae vaginal infection and methicillin-resistant S. aureus skin infection. We further validated structural analogs for both compound classes as antibacterial. Our approach enables the generative deep learning-guided design of de novo antibiotics, providing a platform for mapping uncharted regions of chemical space.
+
 ---
 
 ## 📁 Table of Contents
@@ -80,7 +83,7 @@ We provide a general Jupyter notebooks to downselect molecules based on the filt
 * Cytotoxicity based on Chemprop scores (IMR90, HSkMC, HepG2): ```TOXICITY_THRESHOLD```
 * PAINS and Brenk filters (binary, no threshold needed)
 * Tanimoto similarity to 559 known antibiotics: ```TANSIM_THRESHOLD```
-* Retrosynthetic accessbility (RA) score: ```RA_THRESHOLD```
+* Retrosynthetic accessbility (SA or RA) score: ```SA_RA_THRESHOLD```
 
 The filtered CSVs and the original SMILES lists can be found at [Zenodo](https://doi.org/10.5281/zenodo.15191826).
 
@@ -116,10 +119,10 @@ The code used for de novo molecule generation with JT-VAE can be found at the or
 
 ### Results Summary
 
-| Method  | Total Molecules |
-|---------|------------------|
-| JT-VAE  | 4,831            |
-| CReM    | 55,031           |
+| Method  | Generated  | Downselected |
+|---------|------------|--------------|
+| JT-VAE  | 28,534,490 | 4,831        |
+| CReM    | 480,484    | -            |
 
 All generated molecules were scored on-the-fly using Chemprop and then filtered as described in the paper. 
 
