@@ -78,7 +78,7 @@ We provide a general Jupyter notebooks to downselect molecules based on the filt
 
 ### Downselection Criteria
 
-* Antibiotic activity based on Chemprop scores (Staph. aureus, N. gonorrhoeae): ```ACTIVITY_THRESHOLD```
+* Antibiotic activity based on Chemprop scores (S. aureus, N. gonorrhoeae): ```ACTIVITY_THRESHOLD```
 * Cytotoxicity based on Chemprop scores (IMR90, HSkMC, HepG2): ```TOXICITY_THRESHOLD```
 * PAINS and Brenk filters (binary, no threshold needed)
 * Tanimoto similarity to 559 known antibiotics: ```TANSIM_THRESHOLD```
