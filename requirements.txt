@@ -6,7 +6,7 @@ tqdm>=4.60
 seaborn>=0.11
 matplotlib>=3.3
 
-# Chemistry-specific packages 
+# Chemistry-specific packages
 crem
 
 # t-SNE library
