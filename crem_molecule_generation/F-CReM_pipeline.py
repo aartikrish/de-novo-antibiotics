@@ -1,8 +1,6 @@
 import os
 
-from crem_pipeline import (
-    run_crem,
-)  # Imports the main function that runs the CReM algorithm
+from crem_pipeline import run_crem  # Imports the main function that runs the CReM algorithm
 
 # Set a base directory for storing intermediate predictions and results.
 DIR = "../out/crem/"  # Intermediate folder for predictions/results
@@ -16,20 +14,14 @@ ORIG_FRAG_SMI = "O=C(NC1CC2CCC1O2)Nc3cccc(F)c3"  # F2 fragment
 # For "grow" operations, MAX_ATOM_RANGE and MIN_ATOM_RANGE determine the range of fragment sizes
 # that will be used in the replacement process (e.g. replacing hydrogen atoms).
 MAX_ATOM_RANGE = [6]
-MIN_ATOM_RANGE = [
-    0
-]  # 0 indicates that hydrogens (or very small fragments) are replaced
+MIN_ATOM_RANGE = [0]  # 0 indicates that hydrogens (or very small fragments) are replaced
 
 # RADIUS_RANGE defines the size (or radius) of the environment around the atom to be considered for modification.
 RADIUS_RANGE = [3, 2]
 
 # These ranges are applicable for "mutate" operations to control how much the molecule changes:
-MIN_INC_RANGE = [
-    -2
-]  # Only used for mutation: the minimum change in number of heavy atoms
-MAX_INC_RANGE = [
-    2
-]  # Only used for mutation: the maximum change in number of heavy atoms
+MIN_INC_RANGE = [-2]  # Only used for mutation: the minimum change in number of heavy atoms
+MAX_INC_RANGE = [2]  # Only used for mutation: the maximum change in number of heavy atoms
 
 # Settings for the number of molecules to select after each iteration:
 NUM_TOP_TO_GET = 20  # Number of top (best scoring) molecules to keep

@@ -25,16 +25,12 @@ import sascorer  # noqa
 IPythonConsole.molSize = (400, 300)
 IPythonConsole.ipython_useSVG = True
 db_fname = "../data/static_datasets/replacements02_sc2.5.db"
-abx = pd.read_csv(
-    "../data/static_datasets/04052022_CLEANED_v5_antibiotics_across_many_classes.csv"  # noqa
-)
+abx = pd.read_csv("../data/static_datasets/04052022_CLEANED_v5_antibiotics_across_many_classes.csv")  # noqa
 abx_smiles = list(abx["Smiles"])
 abx_fps = [Chem.RDKFingerprint(Chem.MolFromSmiles(smi)) for smi in abx_smiles]
 
 
-def calculateScoreThruChemprop(
-    patterns, results_folder_name, results_file_name, model_path, hit_column
-):
+def calculateScoreThruChemprop(patterns, results_folder_name, results_file_name, model_path, hit_column):
     """
     Calculate scores through Chemprop model.
 
@@ -55,9 +51,7 @@ def calculateScoreThruChemprop(
 
     # use subprocess to run command line thru jupyter notebook - could easily
     # just run command line but this is automated
-    activate_command = (
-        "source ~/opt/anaconda3/bin/activate; " + "conda activate chemprop; "
-    )
+    activate_command = "source ~/opt/anaconda3/bin/activate; " + "conda activate chemprop; "
     genML_folder = "../"  # from chemprop folder
 
     if "gonorrhea" in model_path:
@@ -101,9 +95,7 @@ def calculateScoreThruChemprop(
         )
         full_command = activate_command + run_command
 
-    subprocess.run(
-        full_command, cwd="../models/chemprop-master/", shell=True, capture_output=True
-    )
+    subprocess.run(full_command, cwd="../models/chemprop-master/", shell=True, capture_output=True)
     preds = pd.read_csv(clean_name)
 
     new_smis = list(preds["SMILES"])
@@ -128,15 +120,11 @@ def get_molecule_scores(ms, intermediate_folder, model_path, hit_column):
     :return: Tuple containing two lists - predicted SMILES and scores
     """
     smis = [Chem.MolToSmiles(m) for m in ms]
-    smis, scores = calculateScoreThruChemprop(
-        smis, intermediate_folder, "_scores.csv", model_path, hit_column
-    )
+    smis, scores = calculateScoreThruChemprop(smis, intermediate_folder, "_scores.csv", model_path, hit_column)
     return (smis, scores)
 
 
-def calculateScoreThruToxModel(
-    patterns, results_folder_name, results_file_name, tox_model
-):
+def calculateScoreThruToxModel(patterns, results_folder_name, results_file_name, tox_model):
     """
     Calculate toxicity scores using a specified Chemprop model.
 
@@ -158,9 +146,7 @@ def calculateScoreThruToxModel(
 
     # use subprocess to run command line thru jupyter notebook - could easily
     # just run command line but this is automated
-    activate_command = (
-        "source ~/opt/anaconda3/bin/activate; conda activate chemprop; "  # noqa
-    )
+    activate_command = "source ~/opt/anaconda3/bin/activate; conda activate chemprop; "  # noqa
     genML_folder = "../"  # from chemprop folder
 
     if tox_model == "primary":
@@ -179,9 +165,7 @@ def calculateScoreThruToxModel(
         + " --features_generator rdkit_2d_normalized --no_features_scaling --smiles_columns SMILES"  # noqa
     )
     full_command = activate_command + run_command
-    test = subprocess.run(
-        full_command, cwd="../models/chemprop-master/", shell=True, capture_output=True
-    )
+    test = subprocess.run(full_command, cwd="../models/chemprop-master/", shell=True, capture_output=True)
     print(test)
     preds = pd.read_csv(clean_name)
 
@@ -193,9 +177,7 @@ def calculateScoreThruToxModel(
         return []
 
 
-def select_top_based_on_criteria(
-    smis, scores, regular_score=False, num_top_to_get=5, num_random_to_get=5
-):
+def select_top_based_on_criteria(smis, scores, regular_score=False, num_top_to_get=5, num_random_to_get=5):
     """
     Selects top compounds based on certain criteria.
 
@@ -225,10 +207,7 @@ def select_top_based_on_criteria(
 
         # add tanimoto similarity to known abx
         query_fps = [Chem.RDKFingerprint(mol) for mol in mols]
-        max_tans = [
-            max(DataStructs.BulkTanimotoSimilarity(query_fp, abx_fps))
-            for query_fp in query_fps
-        ]
+        max_tans = [max(DataStructs.BulkTanimotoSimilarity(query_fp, abx_fps)) for query_fp in query_fps]
         sorteddf["max_tan_sim_to_abx"] = max_tans
 
         # add tox score - hepg2
@@ -277,9 +256,7 @@ def select_top_based_on_criteria(
         )
     good_smis = list(sorteddf.iloc[0:num_top_to_get]["SMILES"])
     good_scos = list(sorteddf.iloc[0:num_top_to_get]["adjusted_score"])
-    for x in random.sample(
-        list(range(num_top_to_get, len(sorteddf))), num_random_to_get
-    ):
+    for x in random.sample(list(range(num_top_to_get, len(sorteddf))), num_random_to_get):
         new = sorteddf.iloc[x, :]["SMILES"]
         good_smis.append(new)
         new_sco = sorteddf.iloc[x, :]["adjusted_score"]
@@ -339,10 +316,7 @@ def generate_molecules(
 
     if grow_or_mut == "grow":
         if params is None:
-            new_mols = [
-                list(grow_mol(mol, db_fname, return_mol=True, ncores=16))
-                for mol in mols
-            ]
+            new_mols = [list(grow_mol(mol, db_fname, return_mol=True, ncores=16)) for mol in mols]
 
         else:
             max_atoms = params[0]
@@ -364,14 +338,7 @@ def generate_molecules(
             ]
     elif grow_or_mut == "mut":
         if params is None:
-            new_mols = [
-                list(
-                    mutate_mol(
-                        Chem.AddHs(mol), db_name=db_fname, return_mol=True, ncores=16
-                    )
-                )
-                for mol in mols
-            ]
+            new_mols = [list(mutate_mol(Chem.AddHs(mol), db_name=db_fname, return_mol=True, ncores=16)) for mol in mols]
         else:
             min_size = params[0]
             max_size = params[1]
@@ -406,9 +373,7 @@ def generate_molecules(
     for full_mol in new_mols:
         if full_mol.HasSubstructMatch(frag_mol):  # contains entirely the fragment
             if catalog is not None:
-                entry = catalog.GetFirstMatch(
-                    full_mol
-                )  # Get the first matching PAINS or Brenk
+                entry = catalog.GetFirstMatch(full_mol)  # Get the first matching PAINS or Brenk
                 if entry is None:  # no matching pains or brenk
                     good_new_mols.append(full_mol)
             else:  # no compound filtering
@@ -508,15 +473,9 @@ def run_crem(
         # grow params
         for ma in max_atom_range:  # max_atoms – maximum number of atoms in the fragment
             # which will replace H
-            for (
-                mi
-            ) in min_atom_range:  # min_atoms – minimum number of atoms in the fragment
+            for mi in min_atom_range:  # min_atoms – minimum number of atoms in the fragment
                 # which will replace H
-                for (
-                    ra
-                ) in (
-                    radius_range
-                ):  # radius – radius of context which will be considered
+                for ra in radius_range:  # radius – radius of context which will be considered
                     # for replacement
                     param_list.append([ma, mi, ra])
     else:
@@ -526,39 +485,22 @@ def run_crem(
             # will be replaced (if they are explicit)
             for ma_s in max_atom_range:  # max_size – maximum number of heavy atoms
                 # in a fragment to replace
-                for (
-                    mi
-                ) in (
-                    min_inc_range
-                ):  # min_inc – minimum change of a number of heavy atoms
+                for mi in min_inc_range:  # min_inc – minimum change of a number of heavy atoms
                     # in replacing fragments to a number of heavy atoms.
                     # Negative value means that the replacing fragments
                     # would be smaller than the replaced one on a
                     # specified number of heavy atoms.
-                    for (
-                        ma
-                    ) in (
-                        max_inc_range
-                    ):  # max_inc – maximum change of a number of heavy atoms
+                    for ma in max_inc_range:  # max_inc – maximum change of a number of heavy atoms
                         # in replacing fragments to a number of heavy atoms
                         # in replaced one.
-                        for (
-                            ra
-                        ) in radius_range:  # radius – radius of context which will be
+                        for ra in radius_range:  # radius – radius of context which will be
                             # considered for replacement
                             param_list.append([mi_s, ma_s, mi, ma, ra])
 
     for param_set in tqdm.tqdm(param_list):
 
         if method == "grow":
-            name = (
-                str(param_set[0])
-                + "_maxatom_"
-                + str(param_set[1])
-                + "_minatom_"
-                + str(param_set[2])
-                + "_radius"
-            )
+            name = str(param_set[0]) + "_maxatom_" + str(param_set[1]) + "_minatom_" + str(param_set[2]) + "_radius"
             clean_dir = out_dir + "grow/" + name + "/"
         else:
             name = (
@@ -594,9 +536,7 @@ def run_crem(
 
         # first make a record
         savedf = pd.DataFrame()
-        savedf["SMILES"] = [
-            Chem.MolToSmiles(mol) for mol in selected_top_mols_to_mutate
-        ]
+        savedf["SMILES"] = [Chem.MolToSmiles(mol) for mol in selected_top_mols_to_mutate]
         savedf["scores"] = selected_top_mol_scos
         savedf.to_csv(clean_dir + "original_starting_mols_round_0.csv", index=False)
 
@@ -633,9 +573,7 @@ def run_crem(
             )
 
             # save the last mols generated
-            alldf.to_csv(
-                clean_dir + "all_mols_from_round_" + str(i) + ".csv", index=False
-            )
+            alldf.to_csv(clean_dir + "all_mols_from_round_" + str(i) + ".csv", index=False)
             selecteddf.to_csv(
                 clean_dir + "original_starting_mols_round_" + str(i + 1) + ".csv",
                 index=False,
