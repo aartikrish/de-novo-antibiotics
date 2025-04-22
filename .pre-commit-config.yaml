@@ -1,0 +1,38 @@
+repos:
+  - repo: https://github.com/psf/black
+    rev: 24.4.2
+    hooks:
+      - id: black
+
+  # - repo: https://github.com/pre-commit/mirrors-isort
+  #   rev: v5.10.0
+  #   hooks:
+  #     - id: isort
+
+  # - repo: https://github.com/pycqa/flake8
+  #   rev: 7.0.0
+  #   hooks:
+  #     - id: flake8
+  #       additional_dependencies: [flake8-bugbear]
+  #       args: [--max-line-length=120]
+
+  # - repo: https://github.com/pre-commit/pre-commit-hooks
+  #   rev: v4.5.0
+  #   hooks:
+  #     - id: trailing-whitespace
+  #     - id: end-of-file-fixer
+  #     - id: check-yaml
+  #     - id: check-added-large-files
+
+  # - repo: https://github.com/nbQA-dev/nbQA
+  #   rev: 1.8.4
+  #   hooks:
+  #     - id: nbqa-black
+  #       files: \.ipynb$
+
+  #     - id: nbqa-flake8
+  #       args: [--max-line-length=120]
+  #       files: \.ipynb$
+
+  #     - id: nbqa-isort
+  #       files: \.ipynb$

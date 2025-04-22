@@ -1,27 +1,26 @@
 """CReM pipeline."""
 
-import pandas as pd
-import subprocess
-import numpy as np
-import random
 import os
-import tqdm
+import random
+import subprocess
 import sys
-import cairosvg
-from crem.crem import mutate_mol, grow_mol
 
-from rdkit import Chem
-from rdkit.Chem import Draw, DataStructs, RDConfig
-from rdkit.Chem.FilterCatalog import FilterCatalog, FilterCatalogParams
-from rdkit.Chem.Draw import IPythonConsole
+import cairosvg
+import numpy as np
+import pandas as pd
+import tqdm
+from crem.crem import grow_mol, mutate_mol
 
 # shut off warnings
-from rdkit import RDLogger
+from rdkit import Chem, RDLogger
+from rdkit.Chem import DataStructs, Draw, RDConfig
+from rdkit.Chem.Draw import IPythonConsole
+from rdkit.Chem.FilterCatalog import FilterCatalog, FilterCatalogParams
+
 RDLogger.DisableLog("rdApp.*")
 
 sys.path.append(os.path.join(RDConfig.RDContribDir, "SA_Score"))
 import sascorer  # noqa
-
 
 IPythonConsole.molSize = (400, 300)
 IPythonConsole.ipython_useSVG = True
@@ -56,8 +55,9 @@ def calculateScoreThruChemprop(
 
     # use subprocess to run command line thru jupyter notebook - could easily
     # just run command line but this is automated
-    activate_command = "source ~/opt/anaconda3/bin/activate; " + \
-        "conda activate chemprop; "
+    activate_command = (
+        "source ~/opt/anaconda3/bin/activate; " + "conda activate chemprop; "
+    )
     genML_folder = "../"  # from chemprop folder
 
     if "gonorrhea" in model_path:
@@ -102,10 +102,7 @@ def calculateScoreThruChemprop(
         full_command = activate_command + run_command
 
     subprocess.run(
-        full_command,
-        cwd="../models/chemprop-master/",
-        shell=True,
-        capture_output=True
+        full_command, cwd="../models/chemprop-master/", shell=True, capture_output=True
     )
     preds = pd.read_csv(clean_name)
 
@@ -161,7 +158,9 @@ def calculateScoreThruToxModel(
 
     # use subprocess to run command line thru jupyter notebook - could easily
     # just run command line but this is automated
-    activate_command = "source ~/opt/anaconda3/bin/activate; conda activate chemprop; "  # noqa
+    activate_command = (
+        "source ~/opt/anaconda3/bin/activate; conda activate chemprop; "  # noqa
+    )
     genML_folder = "../"  # from chemprop folder
 
     if tox_model == "primary":
@@ -181,10 +180,7 @@ def calculateScoreThruToxModel(
     )
     full_command = activate_command + run_command
     test = subprocess.run(
-        full_command,
-        cwd="../models/chemprop-master/",
-        shell=True,
-        capture_output=True
+        full_command, cwd="../models/chemprop-master/", shell=True, capture_output=True
     )
     print(test)
     preds = pd.read_csv(clean_name)
@@ -259,24 +255,20 @@ def select_top_based_on_criteria(
             tansim = row["max_tan_sim_to_abx"]
             hepg2 = row["hepg2_tox"]
             prim = row["prim_tox"]
-            adj_score = (2.0 * chempropsco) - \
-                ((sascore / 10.0) + tansim + hepg2 + prim)
+            adj_score = (2.0 * chempropsco) - ((sascore / 10.0) + tansim + hepg2 + prim)
             adj_scores.append(adj_score)
         sorteddf["adjusted_score"] = adj_scores
 
     # regular score
     else:
         sorteddf["adjusted_score"] = list(sorteddf["scores"])
-    sorteddf = sorteddf.sort_values(
-        "adjusted_score",
-        ascending=False).reset_index()
+    sorteddf = sorteddf.sort_values("adjusted_score", ascending=False).reset_index()
 
     # now select based on score
     if len(sorteddf) < num_top_to_get + num_random_to_get:
         good_smis = list(sorteddf["SMILES"])
         good_scos = list(sorteddf["adjusted_score"])
-        selecteddf = sorteddf[[
-            smi in good_smis for smi in list(sorteddf["SMILES"])]]
+        selecteddf = sorteddf[[smi in good_smis for smi in list(sorteddf["SMILES"])]]
         return (
             [Chem.MolFromSmiles(smi) for smi in good_smis],
             good_scos,
@@ -293,8 +285,7 @@ def select_top_based_on_criteria(
         new_sco = sorteddf.iloc[x, :]["adjusted_score"]
         good_scos.append(new_sco)
 
-    selecteddf = sorteddf[[
-        smi in good_smis for smi in list(sorteddf["SMILES"])]]
+    selecteddf = sorteddf[[smi in good_smis for smi in list(sorteddf["SMILES"])]]
     return (
         [Chem.MolFromSmiles(smi) for smi in good_smis],
         good_scos,
@@ -376,10 +367,7 @@ def generate_molecules(
             new_mols = [
                 list(
                     mutate_mol(
-                        Chem.AddHs(mol),
-                        db_name=db_fname,
-                        return_mol=True,
-                        ncores=16
+                        Chem.AddHs(mol), db_name=db_fname, return_mol=True, ncores=16
                     )
                 )
                 for mol in mols
@@ -416,8 +404,7 @@ def generate_molecules(
     good_new_mols = []
     frag_mol = Chem.MolFromSmiles(orig_frag_to_protect)
     for full_mol in new_mols:
-        if full_mol.HasSubstructMatch(
-                frag_mol):  # contains entirely the fragment
+        if full_mol.HasSubstructMatch(frag_mol):  # contains entirely the fragment
             if catalog is not None:
                 entry = catalog.GetFirstMatch(
                     full_mol
@@ -437,8 +424,7 @@ def generate_molecules(
 
     # get new scores
     smis, scores = get_molecule_scores(
-        new_mols, clean_dir + "all_mols_round_" +
-        str(round_num), model_path, hit_column
+        new_mols, clean_dir + "all_mols_round_" + str(round_num), model_path, hit_column
     )  # doesn't include the previous round
     best_score = max(scores)
     print(
@@ -457,8 +443,8 @@ def run_crem(
     max_atom_range,
     min_atom_range,
     radius_range,
-    min_inc_range=[2],
-    max_inc_range=[-2],
+    min_inc_range=[2],  # noqa: B006
+    max_inc_range=[-2],  # noqa: B006
     num_iters=5,
     method="grow",
     regular_score=True,
@@ -520,17 +506,11 @@ def run_crem(
     param_list = []
     if method == "grow":
         # grow params
-        for (
-            ma
-        ) in (
-            max_atom_range
-        ):  # max_atoms – maximum number of atoms in the fragment
+        for ma in max_atom_range:  # max_atoms – maximum number of atoms in the fragment
             # which will replace H
             for (
                 mi
-            ) in (
-                min_atom_range
-            ):  # min_atoms – minimum number of atoms in the fragment
+            ) in min_atom_range:  # min_atoms – minimum number of atoms in the fragment
                 # which will replace H
                 for (
                     ra
@@ -541,18 +521,10 @@ def run_crem(
                     param_list.append([ma, mi, ra])
     else:
         # mutate params
-        for (
-            mi_s
-        ) in (
-            min_atom_range
-        ):  # min_size – minimum number of heavy atoms
+        for mi_s in min_atom_range:  # min_size – minimum number of heavy atoms
             # in a fragment to replace. If 0 - hydrogens
             # will be replaced (if they are explicit)
-            for (
-                ma_s
-            ) in (
-                max_atom_range
-            ):  # max_size – maximum number of heavy atoms
+            for ma_s in max_atom_range:  # max_size – maximum number of heavy atoms
                 # in a fragment to replace
                 for (
                     mi
@@ -572,9 +544,7 @@ def run_crem(
                         # in replaced one.
                         for (
                             ra
-                        ) in (
-                            radius_range
-                        ):  # radius – radius of context which will be
+                        ) in radius_range:  # radius – radius of context which will be
                             # considered for replacement
                             param_list.append([mi_s, ma_s, mi, ma, ra])
 
@@ -628,10 +598,7 @@ def run_crem(
             Chem.MolToSmiles(mol) for mol in selected_top_mols_to_mutate
         ]
         savedf["scores"] = selected_top_mol_scos
-        savedf.to_csv(
-            clean_dir +
-            "original_starting_mols_round_0.csv",
-            index=False)
+        savedf.to_csv(clean_dir + "original_starting_mols_round_0.csv", index=False)
 
         for i in range(num_iters):
 
@@ -649,8 +616,7 @@ def run_crem(
             )
 
             # select top compounds to continue with
-            if np.max(
-                    param_set) >= 8:  # any parameters too big, must reduce
+            if np.max(param_set) >= 8:  # any parameters too big, must reduce
                 num_top_to_get = 2
                 num_random_to_get = 1
             (
@@ -668,11 +634,9 @@ def run_crem(
 
             # save the last mols generated
             alldf.to_csv(
-                clean_dir + "all_mols_from_round_" + str(i) + ".csv",
-                index=False
+                clean_dir + "all_mols_from_round_" + str(i) + ".csv", index=False
             )
             selecteddf.to_csv(
-                clean_dir + "original_starting_mols_round_" +
-                str(i + 1) + ".csv",
+                clean_dir + "original_starting_mols_round_" + str(i + 1) + ".csv",
                 index=False,
             )
