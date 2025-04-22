@@ -1,6 +1,6 @@
 # A Generative Deep Learning Approach to _de novo_ Antibiotic Design
 
-This repository accompanies the manuscript **"A generative deep learning approach to _de novo_ antibiotic design"** by Krishnan, Anahtar, Valeri, et al., 2025. The datasets accompanying it can be found on [Zenodo](https://doi.org/10.5281/zenodo.15191826).
+This repository accompanies the manuscript **"A generative deep learning approach to _de novo_ antibiotic design"** by Krishnan, Anahtar, Valeri, et al., 2025. The datasets accompanying it can be found on [Zenodo](www.tinyurl.com/de-novo-abx).
 
 
 # Summary
@@ -127,4 +127,4 @@ All generated molecules were scored on-the-fly using Chemprop and then filtered 
 
 ## 6. tSNE Plot – `tSNE_plot/`
 
-The code to generate the tSNE plot is given. The files with the SMILES list used as input can be found on [Zenodo](https://doi.org/10.5281/zenodo.15191826).
+The code to generate the tSNE plot is given. The files with the SMILES list used as input can be found on [Zenodo](https://tinyurl.com/de-novo-abx)
