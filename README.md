@@ -1,6 +1,6 @@
 # A Generative Deep Learning Approach to _de novo_ Antibiotic Design
 
-This repository accompanies the manuscript **"A generative deep learning approach to _de novo_ antibiotic design"** by Krishnan, Anahtar, Valeri, et al., 2025. The datasets accompanying it can be found on [Zenodo](www.tinyurl.com/de-novo-abx).
+This repository accompanies the manuscript **"A generative deep learning approach to _de novo_ antibiotic design"** by Krishnan, Anahtar, Valeri, et al., 2025. The datasets accompanying it can be found on [Zenodo](https://tinyurl.com/de-novo-abx)
 
 
 # Summary
@@ -44,7 +44,7 @@ pip install git+https://github.com/reymond-group/RAscore.git@master
 
 ## 2. Chemprop Models
 
-This work uses Chemprop ensemble models trained to predict antibiotic activity against _Staphylococcus aureus_ and _Neisseria gonorrhoeae_. Additionally, we provide three Chemprop models for cytotoxicity prediction against HepG2, IMR90, and HSkMC human cell lines. The checkpoints and training can be found at [Zenodo](https://doi.org/10.5281/zenodo.15191826).
+This work uses Chemprop ensemble models trained to predict antibiotic activity against _Staphylococcus aureus_ and _Neisseria gonorrhoeae_. Additionally, we provide three Chemprop models for cytotoxicity prediction against HepG2, IMR90, and HSkMC human cell lines. The checkpoints and training can be found on Zenodo.
 
 ### Train a Chemprop Model
 
@@ -84,7 +84,7 @@ We provide a general Jupyter notebooks to downselect molecules based on the filt
 * Tanimoto similarity to 559 known antibiotics: ```TANSIM_THRESHOLD```
 * Retrosynthetic accessbility (SA or RA) score: ```SA_RA_THRESHOLD```
 
-The filtered CSVs and the original SMILES lists can be found at [Zenodo](https://doi.org/10.5281/zenodo.15191826).
+The filtered CSVs and the original SMILES lists can be found on Zenodo.
 
 ---
 
@@ -92,7 +92,7 @@ The filtered CSVs and the original SMILES lists can be found at [Zenodo](https:/
 
 This folder includes generative runs seeded on three fragments: **F2, F3, and F3′**. Each was expanded using both CReM and F-VAE. The code used for molecule generation with F-VAE can be found at the original [GitHub](https://github.com/wengong-jin/multiobj-rationale). The code for generating molecules with CReM can be found in `crem_molecule_generation/` and is adapted by simply changing the SMILES of input fragment.
 
-The list of generated molecules can be found at [Zenodo](https://doi.org/10.5281/zenodo.15191826).
+The list of generated molecules can be found on Zenodo.
 
 ### Results Summary
 
@@ -127,4 +127,4 @@ All generated molecules were scored on-the-fly using Chemprop and then filtered 
 
 ## 6. tSNE Plot – `tSNE_plot/`
 
-The code to generate the tSNE plot is given. The files with the SMILES list used as input can be found on [Zenodo](https://tinyurl.com/de-novo-abx)
+The code to generate the tSNE plot is given. The files with the SMILES list used as input can be found on Zenodo.
