@@ -1,4 +1,4 @@
-"""Helper function for CReM analysis."""
+"""Helper functions for CReM analysis."""
 
 import glob as glob
 import os
@@ -16,9 +16,7 @@ sys.path.append(os.path.join(RDConfig.RDContribDir, "SA_Score"))
 import sascorer  # noqa
 
 
-def calculateScoreThruToxModel(
-    patterns, results_folder_name, results_file_name, tox_model
-):
+def calculateScoreThruToxModel(patterns, results_folder_name, results_file_name, tox_model):
     """
     Function to calculate scores through a toxicity model.
 
@@ -68,9 +66,7 @@ def calculateScoreThruToxModel(
         return []
 
 
-def collate_crem_molecules_from_multiple_rounds(
-    results_path, out_dir, smi_col="SMILES", hit_col="ACTIVITY"
-):
+def collate_crem_molecules_from_multiple_rounds(results_path, out_dir, smi_col="SMILES", hit_col="ACTIVITY"):
     """
     Collates molecules from multiple rounds of results.
 
@@ -105,9 +101,7 @@ def collate_crem_molecules_from_multiple_rounds(
             df = pd.read_csv(filename)
 
             try:
-                _ = df[
-                    df[hit_col] > 0.1
-                ]  # some did not make it to have their activities calculated
+                _ = df[df[hit_col] > 0.1]  # some did not make it to have their activities calculated
             except Exception as e:
                 print(e)
                 continue
@@ -216,10 +210,7 @@ def filter_crem_dataframe(
     abx_fps = [Chem.RDKFingerprint(mol) for mol in abx_mols]
     mols = [Chem.MolFromSmiles(smi) for smi in list(df[smi_col])]
     query_fps = [Chem.RDKFingerprint(mol) for mol in mols]
-    df["max_tan_sim_to_abx"] = [
-        max(DataStructs.BulkTanimotoSimilarity(query_fp, abx_fps))
-        for query_fp in query_fps
-    ]
+    df["max_tan_sim_to_abx"] = [max(DataStructs.BulkTanimotoSimilarity(query_fp, abx_fps)) for query_fp in query_fps]
     if display:
         hist_plot(df, "max_tan_sim_to_abx", "Max Tan Sim to Known Antibiotics", "Round")
     keep_indices = [max_tan < tan_to_abx for max_tan in list(df["max_tan_sim_to_abx"])]
@@ -228,9 +219,7 @@ def filter_crem_dataframe(
     print("Tan Sim to Abx < " + str(tan_to_abx) + ": ", len(df))
 
     # gate on toxicity scores
-    _, hepg2_toxs = calculateScoreThruToxModel(
-        list(df[smi_col]), out_dir, "_temp_predictions.csv", "hepg2"
-    )
+    _, hepg2_toxs = calculateScoreThruToxModel(list(df[smi_col]), out_dir, "_temp_predictions.csv", "hepg2")
     df["hepg2_pred_tox"] = hepg2_toxs
     if display:
         hist_plot(df, "hepg2_pred_tox", "HepG2 Tox Model Score", "Round")
@@ -239,9 +228,7 @@ def filter_crem_dataframe(
     mols = [m for i, m in enumerate(mols) if keep_indices[i]]
     print("HepG2 pred tox < " + str(hepg2_tox_thresh) + ": ", len(df))
 
-    _, prim_toxs = calculateScoreThruToxModel(
-        list(df[smi_col]), out_dir, "_temp_predictions.csv", "primary"
-    )
+    _, prim_toxs = calculateScoreThruToxModel(list(df[smi_col]), out_dir, "_temp_predictions.csv", "primary")
     df["primary_pred_tox"] = prim_toxs
     if display:
         hist_plot(df, "primary_pred_tox", "Primary Tox Model Score", "Round")
@@ -260,15 +247,10 @@ def filter_crem_dataframe(
     )
     ts_fps = [Chem.RDKFingerprint(mol) for mol in ts_mols]
     query_fps = [Chem.RDKFingerprint(mol) for mol in mols]
-    df["max_tan_sim_to_ts"] = [
-        max(DataStructs.BulkTanimotoSimilarity(query_fp, ts_fps))
-        for query_fp in query_fps
-    ]
+    df["max_tan_sim_to_ts"] = [max(DataStructs.BulkTanimotoSimilarity(query_fp, ts_fps)) for query_fp in query_fps]
     if display:
         hist_plot(df, "max_tan_sim_to_ts", "Max Tan Sim to Train Set", "Round")
-    keep_indices = [
-        max_tan < tan_to_train_set for max_tan in list(df["max_tan_sim_to_ts"])
-    ]
+    keep_indices = [max_tan < tan_to_train_set for max_tan in list(df["max_tan_sim_to_ts"])]
     df = df[keep_indices].reset_index(drop=True)
     mols = [m for i, m in enumerate(mols) if keep_indices[i]]
     print("Max Tan Sim to TS < " + str(tan_to_train_set) + ": ", len(df))
@@ -288,14 +270,10 @@ def filter_crem_dataframe(
     # calculate tanimoto similarity to the original molecule as well
     orig_mol_fp = Chem.RDKFingerprint(orig_mol)
     query_fps = [Chem.RDKFingerprint(mol) for mol in mols]
-    df["tan_sim_to_orig_mol"] = [
-        DataStructs.TanimotoSimilarity(q_fp, orig_mol_fp) for q_fp in query_fps
-    ]
+    df["tan_sim_to_orig_mol"] = [DataStructs.TanimotoSimilarity(q_fp, orig_mol_fp) for q_fp in query_fps]
     if display:
         hist_plot(df, "tan_sim_to_orig_mol", "Tanimoto Similarity to Orig Mol", "Round")
-    keep_indices = [
-        tan < orig_mol_tan_thresh for tan in list(df["tan_sim_to_orig_mol"])
-    ]
+    keep_indices = [tan < orig_mol_tan_thresh for tan in list(df["tan_sim_to_orig_mol"])]
     df = df[keep_indices].reset_index(drop=True)
     mols = [m for i, m in enumerate(mols) if keep_indices[i]]
     print("Tan sim to orig mol < " + str(orig_mol_tan_thresh) + ": ", len(df))
