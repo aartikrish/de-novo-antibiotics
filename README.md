@@ -1,6 +1,6 @@
 # A Generative Deep Learning Approach to _de novo_ Antibiotic Design
 
-This repository accompanies the manuscript **"A generative deep learning approach to _de novo_ antibiotic design"** by Krishnan, Anahtar, Valeri, et al., 2025. The datasets accompanying it can be found on [Zenodo](https://tinyurl.com/de-novo-abx)
+This repository accompanies the manuscript **"A generative deep learning approach to _de novo_ antibiotic design"** by Krishnan, Anahtar, Valeri, _et al._, 2025. The datasets accompanying it can be found on [Zenodo](https://tinyurl.com/de-novo-abx)
 
 
 # Summary
