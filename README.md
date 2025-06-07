@@ -88,9 +88,9 @@ The filtered CSVs and the original SMILES lists can be found on Zenodo.
 
 ---
 
-## 4. Fragment-Based Molecule Generation (F2, F3, F3′) – `crem_molecule_generation/`
+## 4. Fragment-Based Molecule Generation (F1, F2, F2′) – `crem_molecule_generation/`
 
-This folder includes generative runs seeded on three fragments: **F2, F3, and F3′**. Each was expanded using both CReM and F-VAE. The code used for molecule generation with F-VAE can be found at the original [GitHub](https://github.com/wengong-jin/multiobj-rationale). The code for generating molecules with CReM can be found in `crem_molecule_generation/` and is adapted by simply changing the SMILES of input fragment.
+This folder includes generative runs seeded on three fragments: **F1, F2, and F2′**. Each was expanded using both CReM and F-VAE. The code used for molecule generation with F-VAE can be found at the original [GitHub](https://github.com/wengong-jin/multiobj-rationale). The code for generating molecules with CReM can be found in `crem_molecule_generation/` and is adapted by simply changing the SMILES of input fragment.
 
 The list of generated molecules can be found on Zenodo.
 
@@ -98,12 +98,12 @@ The list of generated molecules can be found on Zenodo.
 
 | Fragment | Method   | Generated   | Downselected |
 |----------|----------|-------------|--------------|
-| F2       | F-CReM   | 518,203     | 285          |
-| F2       | F-VAE    | 6,937,677   | 678          |
-| F3       | F-CReM   | 141,109     | –            |
-| F3       | F-VAE    | 3,297,292   | –            |
-| F3′      | F-CReM   | 106,557     | –            |
-| F3′      | F-VAE    | 18,164,746  | 9,684        |
+| F1       | F-CReM   | 518,203     | 285          |
+| F1       | F-VAE    | 6,937,677   | 678          |
+| F2       | F-CReM   | 141,109     | –            |
+| F2       | F-VAE    | 3,297,292   | –            |
+| F2′      | F-CReM   | 106,557     | –            |
+| F2′      | F-VAE    | 18,164,746  | 9,684        |
 
 ---
 
