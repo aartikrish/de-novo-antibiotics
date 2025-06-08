@@ -30,7 +30,7 @@ Any distribution of copies of Software, Modifications, or Output must include a 
 IN NO EVENT WILL INSTITUTION BE LIABLE TO ANY ENTITY OR PERSON FOR DIRECT, INDIRECT, SPECIAL, INCIDENTAL, OR CONSEQUENTIAL DAMAGES, INCLUDING LOST PROFITS, ARISING OUT OF THE USE OF THIS SOFTWARE, MODIFICATIONS, OR OUTPUT, EVEN IF INSTITUTION HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. INSTITUTION SPECIFICALLY DISCLAIMS ANY AND ALL WARRANTIES, EXPRESS AND IMPLIED, INCLUDING, BUT NOT LIMITED TO, ANY IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE OR NON-INFRINGEMENT. THE SOFTWARE, MODIFICATIONS, AND OUTPUT ARE PROVIDED “AS IS.” INSTITUTION HAS NO OBLIGATION TO PROVIDE MAINTENANCE, SUPPORT, UPDATES, ALTERATIONS, ADAPTATIONS, ENHANCEMENTS, MODIFICATIONS, IMPROVEMENTS, OR DERIVATIVE WORKS OF THIS SOFTWARE.
   
 8. Acknowledgment in Publications:
-Any academic or scholarly publication arising from the use of this Software, Modifications, or Output should include the following acknowledgment: “The Software used in this research was created by Aarti Krishnan, Jacqueline A Valeri, Wengong Jin, Leif Sieben, Jenna Fromer, Jonathan C Chen, Danyal Rehman, Felix Wong of The Broad Institute, Inc. © 2025 The Broad Institute, Inc.”
+Any academic or scholarly publication arising from the use of this Software, Modifications, or Output should include the following acknowledgment: “The Software used in this research was created by Aarti Krishnan, Melis N. Anahtar, Jacqueline A Valeri, Wengong Jin, Leif Sieben, Jenna Fromer, Jonathan C Chen, Danyal Rehman and Felix Wong of The Broad Institute, Inc. © 2025 The Broad Institute, Inc.”
 
 9. For Commercial Licenses:
 Commercial entities: please contact OSAP@broadinstitute.org for licensing opportunities.
